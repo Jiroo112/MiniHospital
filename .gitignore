@@ -1,0 +1,25 @@
+# IDE & OS
+.vscode/
+.idea/
+*.log
+.DS_Store
+Thumbs.db
+
+# CodeIgniter cache & logs
+hospital-api/application/cache/*
+!hospital-api/application/cache/index.html
+!hospital-api/application/cache/.htaccess
+hospital-api/application/logs/*
+!hospital-api/application/logs/index.html
+
+# Backup
+*.bak
+*.swp
+*~
+
+# Composer (kalau nanti pakai)
+vendor/
+composer.lock
+
+# Node modules (kalau nanti pakai)
+node_modules/

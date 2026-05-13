@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Input Rekam Medis - Dokter</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div id="navbar"></div>
+
+<div class="container">
+    <h3 class="mb-3">Input Rekam Medis</h3>
+
+    <div id="alert-box"></div>
+
+    <div class="row">
+        <!-- Form Input (Kiri) -->
+        <div class="col-md-5">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    Form Rekam Medis <span class="text-muted small" id="namaPasienInfo"></span>
+                </div>
+                <div class="card-body">
+                    <form id="formRekamMedis">
+                        <div class="mb-3">
+                            <label class="form-label">Pasien ID</label>
+                            <input type="number" name="pasien_id" class="form-control" required>
+                            <small class="text-muted">Lihat ID di kolom Pasien di halaman Antrian</small>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Diagnosa <span class="text-danger">*</span></label>
+                            <textarea name="diagnosa" class="form-control" rows="2" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Tindakan</label>
+                            <textarea name="tindakan" class="form-control" rows="2"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Resep</label>
+                            <textarea name="resep" class="form-control" rows="2"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Catatan</label>
+                            <textarea name="catatan" class="form-control" rows="2"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100" id="btnSimpan">
+                            Simpan Rekam Medis
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- List Rekam Medis (Kanan) -->
+        <div class="col-md-7">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    Rekam Medis yang Baru Diinput
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Pasien</th>
+                                    <th>Diagnosa</th>
+                                    <th>Tindakan</th>
+                                    <th>Resep</th>
+                                    <th>Waktu</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                                <tr><td colspan="6" class="text-center">Memuat...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../js/api.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/components.js"></script>
+<script src="../../js/pages/dokter-rekam-medis.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+RewriteEngine On
+
+# Forward Authorization header ke PHP (penting untuk JWT)
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+# Routing CI3: hilangkan index.php dari URL
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L]

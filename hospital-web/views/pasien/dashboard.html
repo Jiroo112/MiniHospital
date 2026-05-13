@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Pasien</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div id="navbar"></div>
+
+<div class="container">
+    <div class="mb-4">
+        <h3>Halo, <span id="userName" class="text-info"></span></h3>
+        <p class="text-muted">Selamat datang di sistem Mini Hospital.</p>
+    </div>
+
+    <!-- Antrian Aktif -->
+    <div class="row mb-4">
+        <div class="col-md-8" id="cardAntrian">
+            <div class="text-center py-3">Memuat antrian...</div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="card-title">Menu Cepat</h6>
+                    <div class="d-grid gap-2">
+                        <a href="booking.html" class="btn btn-info text-white">Booking Antrian</a>
+                        <a href="antrian.html" class="btn btn-outline-secondary">Antrian Saya</a>
+                        <a href="riwayat.html" class="btn btn-outline-secondary">Riwayat Kunjungan</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../js/api.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/components.js"></script>
+<script src="../../js/pages/dashboard-pasien.js"></script>
+
+</body>
+</html>
