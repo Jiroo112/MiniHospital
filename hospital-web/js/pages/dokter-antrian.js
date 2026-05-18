@@ -1,114 +1,164 @@
-let pollingInterval = null;
+var pollingInterval = null;
 
-$(function() {
-    requireRole('dokter');
-    injectNavbar('dokter', 'antrian');
+$(function () {
+  requireRole("dokter");
+  injectNavbar("dokter", "antrian");
 
-    // Set default tanggal ke hari ini
-    $('#filterTanggal').val(new Date().toISOString().split('T')[0]);
+  var today = new Date().toISOString().split("T")[0];
+  $("#filterTanggal").val(today);
+  $("#tanggalHeader").text(
+    new Date().toLocaleDateString("id-ID", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    })
+  );
 
+  loadAntrian();
+  startPolling();
+
+  $("#filterTanggal").on("change", function () {
+    stopPolling();
     loadAntrian();
     startPolling();
+  });
 
-    $('#filterTanggal').on('change', function() {
-        stopPolling();
-        loadAntrian();
-        startPolling();
-    });
+  $("#btnRefresh").on("click", loadAntrian);
 
-    $('#btnRefresh').on('click', loadAntrian);
-
-    // Stop polling saat user pindah halaman
-    $(window).on('beforeunload', stopPolling);
+  $(window).on("beforeunload", stopPolling);
 });
 
+/* ─── Polling ─── */
+
 function startPolling() {
-    // Polling tiap 5 detik (sesuai PDF section 9)
-    pollingInterval = setInterval(loadAntrian, 5000);
-    $('#pollingStatus').html('<span class="badge bg-success">🟢 Auto-refresh aktif (tiap 5 detik)</span>');
+  pollingInterval = setInterval(loadAntrian, 5000);
+  $("#pollingStatus").html("🟢 Auto-refresh 5 detik");
 }
 
 function stopPolling() {
-    if (pollingInterval) {
-        clearInterval(pollingInterval);
-        pollingInterval = null;
-    }
+  if (pollingInterval) {
+    clearInterval(pollingInterval);
+    pollingInterval = null;
+  }
 }
 
+/* ─── Load Data ─── */
+
 function loadAntrian() {
-    const tanggal = $('#filterTanggal').val();
+  var tanggal = $("#filterTanggal").val();
 
-    apiCall(`/queue/today?tanggal=${tanggal}`, 'GET').done(function(res) {
-        $('#totalAntrian').text(res.meta?.total || 0);
+  apiCall("/queue/today?tanggal=" + tanggal, "GET")
+    .done(function (res) {
+      var data = res.data || [];
 
-        const stats = {
-            menunggu: 0,
-            selesai: 0,
-            batal: 0
-        };
-        (res.data || []).forEach(q => {
-            if (stats[q.status] !== undefined) stats[q.status]++;
-        });
+      // Update statistik
+      var stats = { menunggu: 0, selesai: 0, batal: 0 };
+      data.forEach(function (q) {
+        if (stats[q.status] !== undefined) stats[q.status]++;
+      });
 
-        $('#statMenunggu').text(stats.menunggu);
-        $('#statSelesai').text(stats.selesai);
-        $('#statBatal').text(stats.batal);
+      $("#totalAntrian").text(data.length);
+      $("#statMenunggu").text(stats.menunggu);
+      $("#statSelesai").text(stats.selesai);
+      $("#statBatal").text(stats.batal);
+      $("#lastUpdate").text(new Date().toLocaleTimeString("id-ID"));
 
-        if (!res.data || res.data.length === 0) {
-            $('#tableBody').html('<tr><td colspan="6" class="text-center text-muted">Tidak ada antrian pada tanggal ini</td></tr>');
-            return;
-        }
+      if (data.length === 0) {
+        $("#tableBody").html(
+          '<tr><td colspan="6">' +
+            '<div class="empty-state"><div class="ei">🎉</div>' +
+            "<div>Tidak ada antrian pada tanggal ini</div></div>" +
+            "</td></tr>"
+        );
+        return;
+      }
 
-        const rows = res.data.map((q, idx) => `
-            <tr class="${q.status === 'menunggu' ? 'table-warning' : ''}">
-                <td>${idx + 1}</td>
-                <td><span class="badge bg-dark fs-5">${q.nomor_antrian}</span></td>
-                <td>${q.nama_pasien}</td>
-                <td>${formatDate(q.tanggal)}</td>
-                <td>${renderStatusBadge(q.status)}</td>
-                <td>${renderActions(q)}</td>
-            </tr>
-        `).join('');
+      var rows = data
+        .map(function (q, idx) {
+          return (
+            '<tr class="' +
+            (q.status === "menunggu" ? "row-menunggu" : "") +
+            '">' +
+            "<td>" +
+            (idx + 1) +
+            "</td>" +
+            '<td><span class="nomor-box ' +
+            q.status +
+            '">' +
+            q.nomor_antrian +
+            "</span></td>" +
+            "<td><strong>" +
+            q.nama_pasien +
+            "</strong></td>" +
+            "<td>" +
+            formatDate(q.tanggal) +
+            "</td>" +
+            '<td><span class="pill pill-' +
+            q.status +
+            '">' +
+            ucFirst(q.status) +
+            "</span></td>" +
+            "<td>" +
+            renderActions(q) +
+            "</td>" +
+            "</tr>"
+          );
+        })
+        .join("");
 
-        $('#tableBody').html(rows);
-        $('#lastUpdate').text(new Date().toLocaleTimeString('id-ID'));
+      $("#tableBody").html(rows);
+    })
+    .fail(function () {
+      $("#tableBody").html(
+        '<tr><td colspan="6">' +
+          '<div class="empty-state"><div class="ei">⚠️</div>' +
+          "<div>Gagal memuat antrian</div></div>" +
+          "</td></tr>"
+      );
     });
 }
 
-function renderStatusBadge(status) {
-    const badges = {
-        menunggu: '<span class="badge bg-warning text-dark">Menunggu</span>',
-        selesai:  '<span class="badge bg-success">Selesai</span>',
-        batal:    '<span class="badge bg-secondary">Batal</span>'
-    };
-    return badges[status] || status;
-}
+/* ─── Render Helpers ─── */
 
 function renderActions(queue) {
-    let buttons = '';
+  var btn =
+    '<a href="rekam-medis.html?pasien_id=' +
+    queue.pasien_id +
+    "&nama=" +
+    encodeURIComponent(queue.nama_pasien) +
+    '" class="btn-action btn-rekam me-1">📝 Rekam Medis</a>';
 
-    // Tombol Input Rekam Medis - boleh kapan saja
-    buttons += `<a href="rekam-medis.html?pasien_id=${queue.pasien_id}&nama=${encodeURIComponent(queue.nama_pasien)}" 
-                   class="btn btn-sm btn-info me-1">Rekam Medis</a>`;
-
-    // Tombol Selesai - hanya kalau masih menunggu
-    if (queue.status === 'menunggu') {
-        buttons += `<button class="btn btn-sm btn-success" onclick="selesaiAntrian(${queue.id})">Selesai</button>`;
-    }
-
-    return buttons;
+  if (queue.status === "menunggu") {
+    btn +=
+      '<button class="btn-action btn-selesai" ' +
+      'onclick="selesaiAntrian(' +
+      queue.id +
+      ')">✓ Selesai</button>';
+  }
+  return btn;
 }
 
 function selesaiAntrian(id) {
-    if (!confirm('Tandai antrian ini sebagai SELESAI?')) return;
+  if (!confirm("Tandai antrian ini sebagai SELESAI?")) return;
 
-    apiCall(`/queue/${id}/status`, 'PUT', { status: 'selesai' })
-        .done(function(res) {
-            showAlert('#alert-box', 'success', res.message);
-            loadAntrian();
-        })
-        .fail(function(xhr) {
-            const msg = xhr.responseJSON?.message || 'Gagal update status';
-            alert(msg);
-        });
+  apiCall("/queue/" + id + "/status", "PUT", { status: "selesai" })
+    .done(function (res) {
+      var box = $("#alert-box");
+      box.text(res.message || "Antrian ditandai selesai.").show();
+      setTimeout(function () {
+        box.fadeOut();
+      }, 3000);
+      loadAntrian();
+    })
+    .fail(function (xhr) {
+      alert(
+        xhr.responseJSON ? xhr.responseJSON.message : "Gagal update status"
+      );
+    });
+}
+
+function ucFirst(str) {
+  if (!str) return "";
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }
