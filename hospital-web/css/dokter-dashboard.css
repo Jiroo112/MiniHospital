@@ -1,0 +1,46 @@
+.stat-card { padding: 20px 22px; cursor: default; }
+.stat-card::after { width: 80px; height: 80px; }
+.stat-card .stat-icon  { font-size: 1.8rem; display: block; margin-bottom: 6px; }
+.stat-card .stat-value { font-size: 2.2rem; font-weight: 700; line-height: 1; }
+.stat-card .stat-label { font-size: 0.82rem; opacity: 0.85; margin-top: 3px; }
+.card-total    { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+.card-menunggu { background: linear-gradient(135deg, #f59e0b, #d97706); }
+.card-selesai  { background: linear-gradient(135deg, #10b981, #059669); }
+.card-jadwal   { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+
+.welcome-banner {
+    background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%);
+    border-radius: 16px; padding: 24px 28px; color: #fff;
+    position: relative; overflow: hidden;
+}
+.welcome-banner::before {
+    content: '🏥'; position: absolute; right: 24px; top: 50%;
+    transform: translateY(-50%); font-size: 4.5rem; opacity: 0.12; pointer-events: none;
+}
+.welcome-banner h4 { font-weight: 700; font-size: 1.3rem; margin: 0 0 4px; }
+.welcome-banner p  { opacity: 0.8; margin: 0; font-size: 0.88rem; }
+
+.antrian-item {
+    display: flex; align-items: center;
+    padding: 13px 22px; border-bottom: 1px solid #f8fafc; transition: background 0.15s;
+}
+.antrian-item:last-child { border-bottom: none; }
+.antrian-item:hover      { background: #f8fafc; }
+
+.nomor-box { width: 42px; height: 42px; flex-shrink: 0; }
+
+.pasien-info { flex: 1; margin-left: 12px; }
+.pasien-nama { font-weight: 600; color: #1e293b; font-size: 0.9rem; }
+.pasien-meta { font-size: 0.78rem; color: #94a3b8; margin-top: 2px; }
+
+.jadwal-item {
+    display: flex; align-items: center;
+    padding: 11px 22px; border-bottom: 1px solid #f8fafc;
+}
+.jadwal-item:last-child { border-bottom: none; }
+.jadwal-hari { width: 72px; font-weight: 700; font-size: 0.82rem; color: #3b82f6; }
+.jadwal-jam  { font-size: 0.88rem; color: #475569; font-weight: 500; }
+.jadwal-poli { margin-left: auto; font-size: 0.78rem; color: #94a3b8; }
+
+.empty-state { padding: 36px 20px; }
+#flash-alert { display: none; margin: 0 22px 14px; border-radius: 8px; }

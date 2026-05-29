@@ -9,6 +9,14 @@ $(function () {
 
   loadRiwayatBooking();
   loadRekamMedis();
+
+  $('.custom-tab').on('click', function () {
+    var tab = $(this).data('tab');
+    $('.custom-tab').removeClass('active');
+    $(this).addClass('active');
+    $('.tab-content-panel').removeClass('active');
+    $('#tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).addClass('active');
+  });
 });
 
 /* ─── Riwayat Booking ─── */

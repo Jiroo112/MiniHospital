@@ -7,295 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #2563EB;
-            --primary-light: #EFF6FF;
-            --primary-mid: #DBEAFE;
-            --success: #16A34A;
-            --success-light: #F0FDF4;
-            --warning: #D97706;
-            --warning-light: #FFFBEB;
-            --danger: #DC2626;
-            --danger-light: #FEF2F2;
-            --surface: #FFFFFF;
-            --surface-2: #F8FAFC;
-            --border: #E2E8F0;
-            --text-primary: #0F172A;
-            --text-secondary: #64748B;
-            --text-muted: #94A3B8;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-            --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
-            --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
-            --radius: 14px;
-            --radius-sm: 8px;
-        }
-        *, *::before, *::after { box-sizing: border-box; }
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: var(--surface-2);
-            color: var(--text-primary);
-            min-height: 100vh;
-        }
-
-        /* ── NAVBAR ── */
-        .mh-navbar {
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
-            padding: 0 2rem;
-            height: 64px;
-            display: flex;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: var(--shadow-sm);
-        }
-        .mh-navbar .brand {
-            font-size: 1.05rem;
-            font-weight: 800;
-            color: var(--primary);
-            letter-spacing: -0.02em;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            white-space: nowrap;
-        }
-        .brand-icon {
-            width: 34px; height: 34px;
-            background: var(--primary);
-            border-radius: 9px;
-            display: grid;
-            place-items: center;
-            color: #fff;
-            font-size: 1rem;
-        }
-        .mh-nav-links {
-            display: flex;
-            align-items: center;
-            gap: 2px;
-            margin-left: 2rem;
-        }
-        .mh-nav-links a {
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            text-decoration: none;
-            padding: 6px 14px;
-            border-radius: 8px;
-            transition: all 0.15s;
-            white-space: nowrap;
-        }
-        .mh-nav-links a:hover { background: var(--surface-2); color: var(--text-primary); }
-        .mh-nav-links a.active {
-            background: var(--primary-light);
-            color: var(--primary);
-            font-weight: 600;
-        }
-        .mh-nav-right {
-            margin-left: auto;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .nav-avatar {
-            width: 36px; height: 36px;
-            background: linear-gradient(135deg, var(--primary) 0%, #60A5FA 100%);
-            border-radius: 50%;
-            display: grid; place-items: center;
-            color: #fff;
-            font-size: 0.8rem;
-            font-weight: 700;
-            cursor: pointer;
-        }
-        .nav-user-name { font-size: 0.875rem; font-weight: 600; color: var(--text-primary); }
-        .btn-logout {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            background: none;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 5px 14px;
-            cursor: pointer;
-            transition: all 0.15s;
-        }
-        .btn-logout:hover { background: var(--danger-light); color: var(--danger); border-color: var(--danger); }
-
-        /* ── LAYOUT ── */
-        .page-wrapper { max-width: 1280px; margin: 0 auto; padding: 2rem 1.5rem; }
-
-        /* ── PAGE HEADER ── */
-        .page-header { margin-bottom: 2rem; }
-        .page-header h1 {
-            font-size: 1.75rem;
-            font-weight: 800;
-            color: var(--text-primary);
-            letter-spacing: -0.03em;
-            margin: 0;
-        }
-        .page-header p { color: var(--text-secondary); font-size: 0.9rem; margin: 4px 0 0; }
-        .date-chip {
-            display: inline-flex; align-items: center; gap: 6px;
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: 20px; padding: 5px 14px;
-            font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);
-        }
-
-        /* ── STAT CARDS ── */
-        .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
-        .stat-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            box-shadow: var(--shadow-sm);
-            position: relative;
-            overflow: hidden;
-            transition: box-shadow 0.2s, transform 0.2s;
-        }
-        .stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
-            border-radius: var(--radius) var(--radius) 0 0;
-        }
-        .stat-card.blue::before   { background: var(--primary); }
-        .stat-card.green::before  { background: var(--success); }
-        .stat-card.amber::before  { background: var(--warning); }
-        .stat-card.red::before    { background: var(--danger); }
-        .stat-icon-wrap {
-            width: 44px; height: 44px;
-            border-radius: 10px;
-            display: grid; place-items: center;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-        .stat-card.blue  .stat-icon-wrap { background: var(--primary-light); color: var(--primary); }
-        .stat-card.green .stat-icon-wrap { background: var(--success-light); color: var(--success); }
-        .stat-card.amber .stat-icon-wrap { background: var(--warning-light); color: var(--warning); }
-        .stat-card.red   .stat-icon-wrap { background: var(--danger-light); color: var(--danger); }
-        .stat-value {
-            font-size: 2rem; font-weight: 800;
-            letter-spacing: -0.04em;
-            line-height: 1;
-            margin-bottom: 4px;
-        }
-        .stat-label { font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); }
-        .stat-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
-
-        /* ── SECTION GRID ── */
-        .content-grid { display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; }
-
-        /* ── CARD ── */
-        .mh-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-sm);
-            overflow: hidden;
-        }
-        .card-head {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 1.25rem 1.5rem;
-            border-bottom: 1px solid var(--border);
-        }
-        .card-head h2 { font-size: 0.95rem; font-weight: 700; margin: 0; }
-        .card-head .sub { font-size: 0.8rem; color: var(--text-muted); }
-        .card-body-pad { padding: 1.5rem; }
-
-        /* ── TABLE ── */
-        .mh-table { width: 100%; border-collapse: collapse; }
-        .mh-table thead th {
-            font-size: 0.7rem; font-weight: 700;
-            text-transform: uppercase; letter-spacing: 0.08em;
-            color: var(--text-muted);
-            padding: 0.6rem 1rem;
-            background: var(--surface-2);
-            border-bottom: 1px solid var(--border);
-            text-align: left;
-        }
-        .mh-table tbody td {
-            padding: 0.875rem 1rem;
-            font-size: 0.875rem;
-            color: var(--text-primary);
-            border-bottom: 1px solid #F1F5F9;
-            vertical-align: middle;
-        }
-        .mh-table tbody tr:last-child td { border-bottom: none; }
-        .mh-table tbody tr:hover td { background: #F8FBFF; }
-
-        /* ── BADGE ── */
-        .badge-pill {
-            display: inline-flex; align-items: center; gap: 4px;
-            padding: 3px 10px; border-radius: 20px;
-            font-size: 0.72rem; font-weight: 700;
-        }
-        .badge-pill.waiting { background: #FFFBEB; color: #D97706; }
-        .badge-pill.done    { background: #F0FDF4; color: #16A34A; }
-        .badge-pill.cancel  { background: #F1F5F9; color: #64748B; }
-
-        /* ── QUICK ACTIONS ── */
-        .quick-actions { display: flex; flex-direction: column; gap: 10px; }
-        .qa-btn {
-            display: flex; align-items: center; gap: 12px;
-            padding: 14px 16px;
-            border-radius: var(--radius-sm);
-            text-decoration: none;
-            border: 1px solid var(--border);
-            transition: all 0.15s;
-            font-weight: 600; font-size: 0.875rem;
-            color: var(--text-primary);
-            background: var(--surface);
-        }
-        .qa-btn:hover { border-color: var(--primary); background: var(--primary-light); color: var(--primary); box-shadow: var(--shadow-sm); }
-        .qa-icon {
-            width: 36px; height: 36px;
-            background: var(--surface-2); border-radius: 8px;
-            display: grid; place-items: center; font-size: 1rem;
-            flex-shrink: 0; transition: background 0.15s;
-        }
-        .qa-btn:hover .qa-icon { background: var(--primary-mid); }
-        .qa-btn span { flex: 1; }
-        .qa-arrow { color: var(--text-muted); font-size: 0.9rem; }
-
-        /* ── TODAY SUMMARY ── */
-        .today-row {
-            display: flex; align-items: center; gap: 12px;
-            padding: 12px 0;
-            border-bottom: 1px solid #F1F5F9;
-        }
-        .today-row:last-child { border-bottom: none; }
-        .today-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-        .today-doc { font-size: 0.85rem; font-weight: 600; }
-        .today-count { margin-left: auto; font-size: 0.8rem; font-weight: 700; color: var(--primary); }
-
-        /* ── EMPTY STATE ── */
-        .empty-state { text-align: center; padding: 3rem 1rem; color: var(--text-muted); }
-        .empty-state i { font-size: 2.5rem; margin-bottom: 1rem; display: block; opacity: 0.3; }
-        .empty-state p { font-size: 0.875rem; }
-
-        /* ── LOADING ── */
-        .skeleton {
-            background: linear-gradient(90deg, #F1F5F9 25%, #E2E8F0 50%, #F1F5F9 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.4s infinite;
-            border-radius: 6px;
-        }
-        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-
-        /* ── MOBILE ── */
-        @media (max-width: 1024px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 768px) {
-            .content-grid { grid-template-columns: 1fr; }
-            .mh-nav-links { display: none; }
-            .page-wrapper { padding: 1.25rem 1rem; }
-        }
-        @media (max-width: 480px) { .stat-grid { grid-template-columns: 1fr 1fr; } }
-    </style>
+    <link href="../../css/admin.css" rel="stylesheet">
 </head>
 <body>
 
@@ -329,74 +41,82 @@
     </div>
 
     <!-- Stat Cards -->
-    <div class="stat-grid" id="statGrid">
-        <div class="stat-card blue">
-            <div class="stat-icon-wrap"><i class="bi bi-people-fill"></i></div>
-            <div class="stat-value" id="statDokter">—</div>
-            <div class="stat-label">Total Dokter</div>
-            <div class="stat-sub">Terdaftar di sistem</div>
+    <div class="row g-3 mb-4" id="statGrid">
+        <div class="col-6 col-md-3">
+            <div class="stat-card blue">
+                <div class="stat-icon-wrap"><i class="bi bi-people-fill"></i></div>
+                <div class="stat-value" id="statDokter">—</div>
+                <div class="stat-label">Total Dokter</div>
+                <div class="stat-sub">Terdaftar di sistem</div>
+            </div>
         </div>
-        <div class="stat-card green">
-            <div class="stat-icon-wrap"><i class="bi bi-building-fill-cross"></i></div>
-            <div class="stat-value" id="statPoli">—</div>
-            <div class="stat-label">Total Poli</div>
-            <div class="stat-sub">Poli aktif</div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card green">
+                <div class="stat-icon-wrap"><i class="bi bi-building-fill-cross"></i></div>
+                <div class="stat-value" id="statPoli">—</div>
+                <div class="stat-label">Total Poli</div>
+                <div class="stat-sub">Poli aktif</div>
+            </div>
         </div>
-        <div class="stat-card amber">
-            <div class="stat-icon-wrap"><i class="bi bi-person-lines-fill"></i></div>
-            <div class="stat-value" id="statAntrian">—</div>
-            <div class="stat-label">Antrian Hari Ini</div>
-            <div class="stat-sub">Total seluruh poli</div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card amber">
+                <div class="stat-icon-wrap"><i class="bi bi-person-lines-fill"></i></div>
+                <div class="stat-value" id="statAntrian">—</div>
+                <div class="stat-label">Antrian Hari Ini</div>
+                <div class="stat-sub">Total seluruh poli</div>
+            </div>
         </div>
-        <div class="stat-card red">
-            <div class="stat-icon-wrap"><i class="bi bi-hourglass-split"></i></div>
-            <div class="stat-value" id="statMenunggu">—</div>
-            <div class="stat-label">Menunggu</div>
-            <div class="stat-sub">Belum dilayani</div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card red">
+                <div class="stat-icon-wrap"><i class="bi bi-hourglass-split"></i></div>
+                <div class="stat-value" id="statMenunggu">—</div>
+                <div class="stat-label">Menunggu</div>
+                <div class="stat-sub">Belum dilayani</div>
+            </div>
         </div>
     </div>
 
     <!-- Content Grid -->
-    <div class="content-grid">
+    <div class="row g-4">
 
         <!-- Left: Recent Queues -->
-        <div class="mh-card">
-            <div class="card-head">
-                <div>
-                    <h2><i class="bi bi-list-ol me-2" style="color:var(--primary)"></i>Antrian Hari Ini</h2>
-                    <span class="sub" id="queueDateLabel">Memuat...</span>
+        <div class="col-12 col-lg-8">
+            <div class="card mh-card h-100">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <div>
+                        <h2 class="card-title"><i class="bi bi-list-ol me-2 icon-primary"></i>Antrian Hari Ini</h2>
+                        <span class="text-muted small" id="queueDateLabel">Memuat...</span>
+                    </div>
+                    <a href="queues.html" class="card-link">Lihat semua <i class="bi bi-arrow-right"></i></a>
                 </div>
-                <a href="queues.html" style="font-size:0.8rem;font-weight:600;color:var(--primary);text-decoration:none;">
-                    Lihat semua <i class="bi bi-arrow-right"></i>
-                </a>
-            </div>
-            <div style="overflow-x:auto">
-                <table class="mh-table">
-                    <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>Pasien</th>
-                            <th>Dokter</th>
-                            <th>Poli</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="queueBody">
-                        <tr><td colspan="5" class="text-center py-4" style="color:var(--text-muted)">Memuat...</td></tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>No.</th>
+                                <th>Pasien</th>
+                                <th>Dokter</th>
+                                <th>Poli</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="queueBody">
+                            <tr><td colspan="5" class="text-center py-4 text-muted">Memuat...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
         <!-- Right: Quick Actions + Summary -->
-        <div style="display:flex;flex-direction:column;gap:1rem;">
+        <div class="col-12 col-lg-4 d-flex flex-column gap-3">
 
             <!-- Quick Actions -->
-            <div class="mh-card">
-                <div class="card-head">
-                    <h2><i class="bi bi-lightning-charge-fill me-2" style="color:var(--warning)"></i>Aksi Cepat</h2>
+            <div class="card mh-card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="bi bi-lightning-charge-fill me-2 icon-warning"></i>Aksi Cepat</h2>
                 </div>
-                <div class="card-body-pad">
+                <div class="card-body">
                     <div class="quick-actions">
                         <a href="doctors.html" class="qa-btn">
                             <span class="qa-icon"><i class="bi bi-person-badge"></i></span>
@@ -423,12 +143,12 @@
             </div>
 
             <!-- Doctor Summary -->
-            <div class="mh-card">
-                <div class="card-head">
-                    <h2><i class="bi bi-bar-chart-fill me-2" style="color:var(--success)"></i>Dokter Aktif Hari Ini</h2>
+            <div class="card mh-card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="bi bi-bar-chart-fill me-2 icon-success"></i>Dokter Aktif Hari Ini</h2>
                 </div>
-                <div class="card-body-pad" id="doctorSummary">
-                    <div style="color:var(--text-muted);font-size:0.85rem">Memuat...</div>
+                <div class="card-body" id="doctorSummary">
+                    <div class="text-muted small">Memuat...</div>
                 </div>
             </div>
         </div>
@@ -440,112 +160,6 @@
 <script src="../../js/config.js"></script>
 <script src="../../js/api.js"></script>
 <script src="../../js/auth.js"></script>
-
-<script>
-// ── Nav inject
-const NAV_MENU = [
-    { href: 'dashboard.html', label: 'Dashboard',  key: 'dashboard', icon: 'bi-speedometer2' },
-    { href: 'poli.html',      label: 'Poli',        key: 'poli',      icon: 'bi-building-fill-cross' },
-    { href: 'doctors.html',   label: 'Dokter',      key: 'doctors',   icon: 'bi-person-badge' },
-    { href: 'schedules.html', label: 'Jadwal',      key: 'schedules', icon: 'bi-calendar-week' },
-    { href: 'queues.html',    label: 'Antrian',     key: 'queues',    icon: 'bi-list-ol' }
-];
-const BASE_PATH = '/MiniHospital/hospital-web/views/admin/';
-const ACTIVE_PAGE = 'dashboard';
-
-function buildNav() {
-    const links = NAV_MENU.map(m => {
-        const active = m.key === ACTIVE_PAGE ? 'active' : '';
-        return `<a href="${BASE_PATH}${m.href}" class="${active}"><i class="bi ${m.icon} me-1"></i>${m.label}</a>`;
-    }).join('');
-    document.getElementById('navLinks').innerHTML = links;
-}
-
-function setUserInfo() {
-    const user = getUser();
-    if (!user) return;
-    document.getElementById('userName').textContent = user.name;
-    document.getElementById('navUserName').textContent = user.name;
-    const initials = user.name?.split(' ').map(w => w[0]).join('').toUpperCase().substring(0, 2) || 'A';
-    document.getElementById('navAvatar').textContent = initials;
-}
-
-function setTodayDate() {
-    const now = new Date();
-    const opts = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-    const label = now.toLocaleDateString('id-ID', opts);
-    document.getElementById('todayDate').textContent = label;
-    document.getElementById('queueDateLabel').textContent = label;
-}
-
-function statusBadge(status) {
-    const map = {
-        menunggu: '<span class="badge-pill waiting"><i class="bi bi-clock"></i> Menunggu</span>',
-        selesai:  '<span class="badge-pill done"><i class="bi bi-check"></i> Selesai</span>',
-        batal:    '<span class="badge-pill cancel">Batal</span>'
-    };
-    return map[status] || status;
-}
-
-function loadQueues() {
-    const today = new Date().toISOString().split('T')[0];
-    apiCall(`/queue/today?tanggal=${today}`, 'GET').done(function(res) {
-        const data = res.data || [];
-        const total = res.meta?.total || data.length;
-        const menunggu = data.filter(q => q.status === 'menunggu').length;
-
-        document.getElementById('statAntrian').textContent = total;
-        document.getElementById('statMenunggu').textContent = menunggu;
-
-        if (!data.length) {
-            document.getElementById('queueBody').innerHTML = `
-                <tr><td colspan="5">
-                    <div class="empty-state"><i class="bi bi-inbox"></i><p>Belum ada antrian hari ini</p></div>
-                </td></tr>`;
-            return;
-        }
-
-        const rows = data.slice(0, 8).map((q, i) => `
-            <tr>
-                <td><span style="font-weight:700;color:var(--primary)">${q.nomor_antrian}</span></td>
-                <td style="font-weight:600">${q.nama_pasien}</td>
-                <td style="color:var(--text-secondary)">${q.nama_dokter}</td>
-                <td><span style="font-size:0.78rem;background:var(--primary-light);color:var(--primary);padding:2px 8px;border-radius:4px;font-weight:600">${q.nama_poli}</span></td>
-                <td>${statusBadge(q.status)}</td>
-            </tr>`).join('');
-        document.getElementById('queueBody').innerHTML = rows;
-
-        // Doctor summary
-        const byDoc = {};
-        data.forEach(q => { byDoc[q.nama_dokter] = (byDoc[q.nama_dokter] || 0) + 1; });
-        const colors = ['#2563EB','#16A34A','#D97706','#DC2626','#7C3AED','#0891B2'];
-        const rows2 = Object.entries(byDoc).slice(0, 5).map(([name, count], i) => `
-            <div class="today-row">
-                <span class="today-dot" style="background:${colors[i % colors.length]}"></span>
-                <span class="today-doc">${name}</span>
-                <span class="today-count">${count} pasien</span>
-            </div>`).join('');
-        document.getElementById('doctorSummary').innerHTML = rows2 ||
-            '<p style="color:var(--text-muted);font-size:0.85rem">Tidak ada dokter praktek hari ini</p>';
-    });
-}
-
-function loadStats() {
-    apiCall('/doctors', 'GET').done(res => {
-        document.getElementById('statDokter').textContent = res.data?.length ?? '—';
-    });
-    apiCall('/poli', 'GET').done(res => {
-        document.getElementById('statPoli').textContent = res.data?.length ?? '—';
-    });
-}
-
-// INIT
-requireRole('admin');
-buildNav();
-setUserInfo();
-setTodayDate();
-loadStats();
-loadQueues();
-</script>
+<script src="../../js/pages/dashboard-admin.js"></script>
 </body>
 </html>

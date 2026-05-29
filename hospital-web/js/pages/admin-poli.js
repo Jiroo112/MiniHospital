@@ -1,94 +1,112 @@
-$(function() {
-    requireRole('admin');
-    injectNavbar('admin', 'poli');
+const NAV_MENU = [
+    { href: 'dashboard.html', label: 'Dashboard',  key: 'dashboard', icon: 'bi-speedometer2' },
+    { href: 'poli.html',      label: 'Poli',        key: 'poli',      icon: 'bi-building-fill-cross' },
+    { href: 'doctors.html',   label: 'Dokter',      key: 'doctors',   icon: 'bi-person-badge' },
+    { href: 'schedules.html', label: 'Jadwal',      key: 'schedules', icon: 'bi-calendar-week' },
+    { href: 'queues.html',    label: 'Antrian',     key: 'queues',    icon: 'bi-list-ol' }
+];
+const BASE_PATH   = '/MiniHospital/hospital-web/views/admin/';
+const ACTIVE_PAGE = 'poli';
 
-    loadPoli();
+function buildNav() {
+    document.getElementById('navLinks').innerHTML = NAV_MENU.map(m => {
+        const active = m.key === ACTIVE_PAGE ? 'active' : '';
+        return `<a href="${BASE_PATH}${m.href}" class="${active}"><i class="bi ${m.icon} me-1"></i>${m.label}</a>`;
+    }).join('');
+}
 
-    // Tombol "Tambah Poli"
-    $('#btnTambah').on('click', openCreateModal);
+function setUserInfo() {
+    const u = getUser(); if (!u) return;
+    document.getElementById('navUserName').textContent = u.name;
+    document.getElementById('navAvatar').textContent =
+        (u.name?.split(' ').map(w => w[0]).join('').toUpperCase() || 'A').substring(0, 2);
+}
 
-    // Submit form (handle create & update)
-    $('#formPoli').on('submit', handleSubmit);
-});
+function showAlert(type, msg) {
+    const icon = type === 'success' ? 'bi-check-circle-fill' : 'bi-x-circle-fill';
+    document.getElementById('alertBox').innerHTML =
+        `<div class="mh-alert ${type}"><i class="bi ${icon}"></i>${msg}</div>`;
+    setTimeout(() => document.getElementById('alertBox').innerHTML = '', 4000);
+}
+
+requireRole('admin');
+buildNav();
+setUserInfo();
+
+const POLI_ICONS = [
+    'bi-heart-pulse', 'bi-eye', 'bi-lungs', 'bi-capsule',
+    'bi-person-arms-up', 'bi-droplet-half', 'bi-bandaid',
+    'bi-clipboard2-pulse', 'bi-thermometer-half'
+];
 
 function loadPoli() {
-    $('#tableBody').html('<tr><td colspan="4" class="text-center">Memuat...</td></tr>');
-
     apiCall('/poli', 'GET').done(function(res) {
-        if (!res.data || res.data.length === 0) {
-            $('#tableBody').html('<tr><td colspan="4" class="text-center text-muted">Belum ada data poli</td></tr>');
+        if (!res.data || !res.data.length) {
+            document.getElementById('poliGrid').innerHTML =
+                `<div class="empty-state" style="grid-column:1/-1"><i class="bi bi-building-fill-cross"></i><p>Belum ada data poli</p></div>`;
             return;
         }
-
-        const rows = res.data.map((p, idx) => `
-            <tr>
-                <td>${idx + 1}</td>
-                <td>${p.nama_poli}</td>
-                <td>${p.lokasi || '-'}</td>
-                <td>
-                    <button class="btn btn-sm btn-warning me-1" onclick="openEditModal(${p.id})">Edit</button>
-                    <button class="btn btn-sm btn-danger" onclick="hapusPoli(${p.id}, '${p.nama_poli}')">Hapus</button>
-                </td>
-            </tr>
-        `).join('');
-
-        $('#tableBody').html(rows);
+        document.getElementById('poliGrid').innerHTML = res.data.map((p, i) => `
+            <div class="poli-card" data-name="${p.nama_poli.toLowerCase()}">
+                <div class="poli-card-icon"><i class="bi ${POLI_ICONS[i % POLI_ICONS.length]}"></i></div>
+                <div class="poli-card-name">${p.nama_poli}</div>
+                <div class="poli-card-loc"><i class="bi bi-geo-alt"></i>${p.lokasi || 'Lokasi belum diatur'}</div>
+                <div class="poli-card-actions">
+                    <button class="btn-action btn-edit" onclick="openEditModal(${p.id})"><i class="bi bi-pencil"></i> Edit</button>
+                    <button class="btn-action btn-del" onclick="hapusPoli(${p.id},'${p.nama_poli}')"><i class="bi bi-trash"></i> Hapus</button>
+                </div>
+            </div>`).join('');
     });
 }
 
 function openCreateModal() {
-    $('#modalTitle').text('Tambah Poli');
-    $('#formPoli')[0].reset();
-    $('input[name=id]').val('');
-    $('#poliModal').modal('show');
+    document.getElementById('modalTitle').textContent = 'Tambah Poli';
+    document.getElementById('formPoli').reset();
+    document.querySelector('input[name=id]').value = '';
+    new bootstrap.Modal(document.getElementById('poliModal')).show();
 }
 
 function openEditModal(id) {
     apiCall(`/poli/${id}`, 'GET').done(function(res) {
-        if (res.status && res.data) {
-            $('#modalTitle').text('Edit Poli');
-            $('input[name=id]').val(res.data.id);
-            $('input[name=nama_poli]').val(res.data.nama_poli);
-            $('input[name=lokasi]').val(res.data.lokasi || '');
-            $('#poliModal').modal('show');
-        }
+        if (!res.status || !res.data) return;
+        document.getElementById('modalTitle').textContent = 'Edit Poli';
+        document.querySelector('input[name=id]').value       = res.data.id;
+        document.querySelector('input[name=nama_poli]').value = res.data.nama_poli;
+        document.querySelector('input[name=lokasi]').value   = res.data.lokasi || '';
+        new bootstrap.Modal(document.getElementById('poliModal')).show();
     });
-}
-
-function handleSubmit(e) {
-    e.preventDefault();
-
-    const id = $('input[name=id]').val();
-    const data = {
-        nama_poli: $('input[name=nama_poli]').val(),
-        lokasi:    $('input[name=lokasi]').val()
-    };
-
-    const endpoint = id ? `/poli/${id}` : '/poli';
-    const method   = id ? 'PUT' : 'POST';
-
-    apiCall(endpoint, method, data)
-        .done(function(res) {
-            $('#poliModal').modal('hide');
-            showAlert('#alert-box', 'success', res.message);
-            loadPoli();
-        })
-        .fail(function(xhr) {
-            const msg = xhr.responseJSON?.message || 'Gagal menyimpan';
-            alert(msg);
-        });
 }
 
 function hapusPoli(id, nama) {
     if (!confirm(`Yakin hapus poli "${nama}"?`)) return;
-
     apiCall(`/poli/${id}`, 'DELETE')
-        .done(function(res) {
-            showAlert('#alert-box', 'success', res.message);
+        .done(res => { showAlert('success', res.message); loadPoli(); })
+        .fail(xhr => showAlert('error', xhr.responseJSON?.message || 'Gagal menghapus'));
+}
+
+document.getElementById('btnTambah').onclick = openCreateModal;
+
+document.getElementById('formPoli').onsubmit = function(e) {
+    e.preventDefault();
+    const id   = document.querySelector('input[name=id]').value;
+    const data = {
+        nama_poli: document.querySelector('input[name=nama_poli]').value,
+        lokasi:    document.querySelector('input[name=lokasi]').value
+    };
+    apiCall(id ? `/poli/${id}` : '/poli', id ? 'PUT' : 'POST', data)
+        .done(res => {
+            bootstrap.Modal.getInstance(document.getElementById('poliModal')).hide();
+            showAlert('success', res.message);
             loadPoli();
         })
-        .fail(function(xhr) {
-            const msg = xhr.responseJSON?.message || 'Gagal menghapus';
-            alert(msg);
-        });
-}
+        .fail(xhr => showAlert('error', xhr.responseJSON?.message || 'Gagal menyimpan'));
+};
+
+document.getElementById('searchInput').oninput = function() {
+    const q = this.value.toLowerCase();
+    document.querySelectorAll('.poli-card').forEach(c => {
+        c.style.display = c.dataset.name.includes(q) ? '' : 'none';
+    });
+};
+
+loadPoli();

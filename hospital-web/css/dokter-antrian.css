@@ -1,0 +1,50 @@
+.page-header::before { content: '🏥'; }
+
+.stat-card { padding: 18px 20px; }
+.stat-card::after { width: 70px; height: 70px; }
+.stat-card .sv { font-size: 2rem; font-weight: 700; line-height: 1; }
+.stat-card .sl { font-size: 0.8rem; opacity: 0.85; margin-top: 3px; }
+.stat-card .si { font-size: 1.6rem; display: block; margin-bottom: 5px; }
+.card-blue   { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+.card-yellow { background: linear-gradient(135deg, #f59e0b, #d97706); }
+.card-green  { background: linear-gradient(135deg, #10b981, #059669); }
+.card-gray   { background: linear-gradient(135deg, #64748b, #475569); }
+
+.filter-bar {
+    padding: 14px 22px; border-bottom: 1px solid #f1f5f9;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+}
+.filter-bar label { font-size: 0.82rem; font-weight: 600; color: #64748b; margin: 0; }
+.filter-bar input[type=date] {
+    border: 1px solid #e2e8f0; border-radius: 8px;
+    padding: 6px 12px; font-size: 0.85rem; font-family: inherit; outline: none;
+}
+.filter-bar input[type=date]:focus { border-color: #3b82f6; }
+
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table thead tr { background: #f8fafc; border-bottom: 2px solid #f1f5f9; }
+.data-table thead th {
+    padding: 11px 16px; font-size: 0.78rem; font-weight: 700;
+    color: #64748b; text-transform: uppercase; letter-spacing: 0.04em;
+}
+.data-table tbody tr { border-bottom: 1px solid #f8fafc; transition: background 0.15s; }
+.data-table tbody tr:last-child { border-bottom: none; }
+.data-table tbody tr:hover { background: #f8fafc; }
+.data-table tbody tr.row-menunggu { background: #fffbeb; }
+.data-table tbody tr.row-menunggu:hover { background: #fef3c7; }
+.data-table td { padding: 12px 16px; font-size: 0.875rem; color: #374151; }
+
+.nomor-box { width: 38px; height: 38px; }
+
+.btn-action {
+    padding: 4px 12px; border-radius: 8px;
+    font-size: 0.78rem; font-weight: 600; border: none; cursor: pointer; transition: opacity 0.15s;
+}
+.btn-action:hover { opacity: 0.85; }
+.btn-rekam   { background: #e0f2fe; color: #0369a1; text-decoration: none; }
+.btn-selesai { background: #d1fae5; color: #065f46; }
+
+.empty-state { padding: 48px 20px; }
+.empty-state .ei { font-size: 2.5rem; margin-bottom: 8px; }
+#alert-box { margin: 0 22px 14px; border-radius: 8px; display: none; }
+.update-info { font-size: 0.75rem; color: #94a3b8; }

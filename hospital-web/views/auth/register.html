@@ -6,106 +6,20 @@
     <title>Daftar - Mini Hospital</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * { font-family: 'Plus Jakarta Sans', sans-serif; }
-        body {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1d4ed8 100%);
-            display: flex; align-items: center; justify-content: center;
-            padding: 24px 0;
-        }
-        .register-wrapper { width: 100%; max-width: 520px; padding: 20px; }
-
-        .brand { text-align: center; margin-bottom: 24px; }
-        .brand-icon {
-            width: 56px; height: 56px; background: #3b82f6;
-            border-radius: 16px; display: flex; align-items: center;
-            justify-content: center; margin: 0 auto 12px;
-            font-size: 1.8rem; box-shadow: 0 8px 24px rgba(59,130,246,0.4);
-        }
-        .brand h2 { color: #fff; font-weight: 700; font-size: 1.4rem; margin: 0; }
-        .brand p  { color: rgba(255,255,255,0.6); font-size: 0.82rem; margin: 4px 0 0; }
-
-        .register-card {
-            background: rgba(255,255,255,0.06);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 20px; padding: 30px;
-        }
-        .register-card h5 {
-            color: #fff; font-weight: 700; font-size: 1.05rem;
-            margin: 0 0 22px;
-        }
-        .section-divider {
-            color: rgba(255,255,255,0.4); font-size: 0.75rem;
-            font-weight: 700; text-transform: uppercase;
-            letter-spacing: 0.06em; margin: 20px 0 14px;
-            display: flex; align-items: center; gap: 10px;
-        }
-        .section-divider::before, .section-divider::after {
-            content: ''; flex: 1; height: 1px;
-            background: rgba(255,255,255,0.1);
-        }
-
-        .form-label {
-            color: rgba(255,255,255,0.7); font-size: 0.82rem;
-            font-weight: 600; margin-bottom: 5px;
-        }
-        .form-control, .form-select {
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 10px; color: #fff;
-            padding: 9px 13px; font-size: 0.875rem;
-            font-family: inherit;
-            transition: border-color 0.2s, background 0.2s;
-        }
-        .form-control::placeholder { color: rgba(255,255,255,0.3); }
-        .form-control:focus, .form-select:focus {
-            background: rgba(255,255,255,0.12);
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
-            color: #fff; outline: none;
-        }
-        .form-select option { background: #1e3a5f; color: #fff; }
-        textarea.form-control { resize: vertical; min-height: 72px; }
-
-        .btn-register {
-            background: linear-gradient(135deg, #10b981, #059669);
-            border: none; border-radius: 10px; color: #fff;
-            padding: 11px; font-size: 0.95rem; font-weight: 600;
-            width: 100%; cursor: pointer;
-            transition: opacity 0.2s, transform 0.15s;
-            box-shadow: 0 4px 16px rgba(16,185,129,0.35);
-        }
-        .btn-register:hover  { opacity: 0.9; transform: translateY(-1px); }
-        .btn-register:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-
-        .register-footer {
-            text-align: center; margin-top: 18px;
-            color: rgba(255,255,255,0.5); font-size: 0.85rem;
-        }
-        .register-footer a { color: #60a5fa; text-decoration: none; font-weight: 600; }
-        .register-footer a:hover { color: #93c5fd; }
-
-        #alert-box { margin-bottom: 16px; }
-        #alert-box .alert {
-            border-radius: 10px; font-size: 0.85rem;
-            border: none; padding: 10px 14px;
-        }
-        .alert-danger  { background: rgba(239,68,68,0.2);  color: #fca5a5; }
-        .alert-success { background: rgba(16,185,129,0.2); color: #6ee7b7; }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="../../css/auth.css" rel="stylesheet">
+    <link href="../../css/auth-register.css" rel="stylesheet">
 </head>
 <body>
 
-<div class="register-wrapper">
+<div class="auth-wrapper">
     <div class="brand">
         <div class="brand-icon">🏥</div>
         <h2>Mini Hospital</h2>
         <p>Buat akun pasien baru</p>
     </div>
 
-    <div class="register-card">
+    <div class="auth-card">
         <h5>Daftar Akun Pasien</h5>
 
         <div id="alert-box"></div>
@@ -159,7 +73,7 @@
         </form>
     </div>
 
-    <div class="register-footer">
+    <div class="auth-footer">
         Sudah punya akun?
         <a href="login.html">Masuk di sini</a>
     </div>

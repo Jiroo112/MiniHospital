@@ -1,0 +1,28 @@
+body { padding: 24px 0; }
+.auth-wrapper { max-width: 520px; }
+.brand { margin-bottom: 24px; }
+.brand-icon { width: 56px; height: 56px; border-radius: 16px; font-size: 1.8rem; }
+.brand h2 { font-size: 1.4rem; }
+.brand p  { font-size: 0.82rem; }
+.auth-card { padding: 30px; }
+.auth-card h5 { font-size: 1.05rem; margin-bottom: 22px; }
+
+.section-divider {
+    color: rgba(255,255,255,0.4); font-size: 0.75rem;
+    font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; margin: 20px 0 14px;
+    display: flex; align-items: center; gap: 10px;
+}
+.section-divider::before,
+.section-divider::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.1); }
+
+.btn-register {
+    background: linear-gradient(135deg, #10b981, #059669);
+    border: none; border-radius: 10px; color: #fff;
+    padding: 11px; font-size: 0.95rem; font-weight: 600;
+    width: 100%; cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    box-shadow: 0 4px 16px rgba(16,185,129,0.35);
+}
+.btn-register:hover   { opacity: 0.9; transform: translateY(-1px); }
+.btn-register:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }

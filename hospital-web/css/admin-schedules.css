@@ -1,0 +1,18 @@
+.select-filter {
+    border: 1px solid var(--border); border-radius: 10px; padding: 9px 14px;
+    font-size: 0.875rem; font-family: inherit; outline: none;
+    background: var(--surface); cursor: pointer; transition: border-color 0.15s; min-width: 180px;
+}
+.select-filter:focus { border-color: var(--primary); }
+
+.day-badge  { display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+.day-Senin  { background: #EFF6FF; color: #2563EB; }
+.day-Selasa { background: #F0FDF4; color: #16A34A; }
+.day-Rabu   { background: #FFFBEB; color: #D97706; }
+.day-Kamis  { background: #FEF2F2; color: #DC2626; }
+.day-Jumat  { background: #F5F3FF; color: #7C3AED; }
+.day-Sabtu  { background: #FFF7ED; color: #EA580C; }
+.day-Minggu { background: #FDF2F8; color: #DB2777; }
+
+.time-wrap { display: flex; align-items: center; gap: 6px; color: var(--text-secondary); font-size: 0.85rem; font-weight: 600; }
+.time-sep  { color: var(--text-muted); font-size: 0.75rem; }

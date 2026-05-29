@@ -1,0 +1,60 @@
+* { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1d4ed8 100%);
+    display: flex; align-items: center; justify-content: center;
+}
+
+.auth-wrapper { width: 100%; padding: 20px; }
+
+.brand { text-align: center; }
+.brand-icon {
+    background: #3b82f6;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 12px;
+    box-shadow: 0 8px 24px rgba(59,130,246,0.4);
+}
+.brand h2 { color: #fff; font-weight: 700; margin: 0; }
+.brand p  { color: rgba(255,255,255,0.6); margin: 4px 0 0; }
+
+.auth-card {
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+}
+.auth-card h5 { color: #fff; font-weight: 700; margin: 0; }
+
+.auth-footer {
+    text-align: center; margin-top: 18px;
+    color: rgba(255,255,255,0.5); font-size: 0.85rem;
+}
+.auth-footer a { color: #60a5fa; text-decoration: none; font-weight: 600; }
+.auth-footer a:hover { color: #93c5fd; }
+
+.form-label { color: rgba(255,255,255,0.7); font-size: 0.82rem; font-weight: 600; margin-bottom: 5px; }
+.form-control,
+.form-select {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 10px; color: #fff;
+    padding: 9px 13px; font-size: 0.875rem;
+    font-family: inherit;
+    transition: border-color 0.2s, background 0.2s;
+}
+.form-control::placeholder { color: rgba(255,255,255,0.3); }
+.form-control:focus,
+.form-select:focus {
+    background: rgba(255,255,255,0.12);
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+    color: #fff; outline: none;
+}
+.form-select option { background: #1e3a5f; color: #fff; }
+textarea.form-control { resize: vertical; min-height: 72px; }
+
+#alert-box { margin-bottom: 16px; }
+#alert-box .alert { border-radius: 10px; font-size: 0.85rem; border: none; padding: 10px 14px; }
+.alert-danger  { background: rgba(239,68,68,0.2);  color: #fca5a5; }
+.alert-success { background: rgba(16,185,129,0.2); color: #6ee7b7; }

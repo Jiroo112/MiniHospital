@@ -1,0 +1,49 @@
+.page-header::before { content: '📋'; }
+.section-header { gap: 10px; justify-content: flex-start; }
+
+.form-body { padding: 20px 22px; }
+.form-label { font-size: 0.82rem; font-weight: 600; color: #374151; margin-bottom: 5px; }
+.form-control,
+.form-select {
+    border: 1px solid #e2e8f0; border-radius: 8px;
+    font-size: 0.875rem; font-family: inherit; padding: 8px 12px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+.form-control:focus,
+.form-select:focus {
+    border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.12); outline: none;
+}
+textarea.form-control { resize: vertical; min-height: 72px; }
+
+.pasien-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #eff6ff; color: #1d4ed8;
+    padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;
+}
+
+.btn-simpan {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #fff; border: none; border-radius: 10px;
+    padding: 10px 20px; font-size: 0.9rem; font-weight: 600;
+    width: 100%; cursor: pointer; transition: opacity 0.2s, transform 0.15s;
+}
+.btn-simpan:hover    { opacity: 0.9; transform: translateY(-1px); }
+.btn-simpan:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+.rekam-item { padding: 16px 22px; border-bottom: 1px solid #f8fafc; transition: background 0.15s; }
+.rekam-item:last-child { border-bottom: none; }
+.rekam-item:hover { background: #f8fafc; }
+.rekam-item-header {
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;
+}
+.rekam-nama  { font-weight: 700; color: #1e293b; font-size: 0.9rem; }
+.rekam-waktu { font-size: 0.75rem; color: #94a3b8; }
+.rekam-field { margin-bottom: 6px; }
+.rekam-field-label {
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.04em; color: #94a3b8; margin-bottom: 2px;
+}
+.rekam-field-value { font-size: 0.85rem; color: #374151; }
+
+.empty-state { padding: 36px 20px; }
+#alert-box { margin: 0 22px 14px; border-radius: 8px; }

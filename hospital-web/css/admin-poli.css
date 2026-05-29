@@ -1,0 +1,24 @@
+.page-wrapper { max-width: 1000px; }
+
+.poli-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+.poli-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 1.5rem; box-shadow: var(--shadow-sm); transition: all 0.2s;
+    position: relative; overflow: hidden;
+}
+.poli-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--primary), #60A5FA);
+}
+.poli-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.poli-card-icon {
+    width: 48px; height: 48px; background: var(--primary-light); border-radius: 12px;
+    display: grid; place-items: center; color: var(--primary); font-size: 1.4rem; margin-bottom: 1rem;
+}
+.poli-card-name { font-size: 1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 4px; }
+.poli-card-loc  { font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 5px; margin-bottom: 1rem; }
+.poli-card-actions { display: flex; gap: 8px; }
+.poli-card-actions .btn-action { padding: 6px 14px; border-radius: 8px; }
+
+.poli-card:nth-child(2n) .poli-card-icon { background: var(--success-light); color: var(--success); }
+.poli-card:nth-child(3n) .poli-card-icon { background: var(--warning-light); color: var(--warning); }

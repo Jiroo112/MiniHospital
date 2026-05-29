@@ -1,0 +1,18 @@
+.auth-wrapper { max-width: 440px; }
+.brand { margin-bottom: 28px; }
+.brand-icon { width: 64px; height: 64px; border-radius: 18px; font-size: 2rem; }
+.brand h2 { font-size: 1.5rem; }
+.brand p  { font-size: 0.85rem; }
+.auth-card { padding: 32px; }
+.auth-card h5 { font-size: 1.1rem; margin-bottom: 24px; }
+
+.btn-login {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    border: none; border-radius: 10px; color: #fff;
+    padding: 11px; font-size: 0.95rem; font-weight: 600;
+    width: 100%; cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    box-shadow: 0 4px 16px rgba(37,99,235,0.4);
+}
+.btn-login:hover   { opacity: 0.9; transform: translateY(-1px); }
+.btn-login:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
