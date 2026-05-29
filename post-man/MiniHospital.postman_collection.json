@@ -1,0 +1,856 @@
+{
+  "info": {
+    "_postman_id": "07831853-7cbb-45cd-a4f6-570c3a41bde1",
+    "name": "MiniHospital",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "39243226"
+  },
+  "item": [
+    {
+      "name": "Dokter",
+      "item": [
+        {
+          "name": "AddDokter",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJuYW1lIjoiQWRtaW4gS2xpbmlrIiwiZW1haWwiOiJhZG1pbjJAaG9zcGl0YWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc4NTY4ODU2LCJleHAiOjE3Nzg2NTUyNTZ9.8T3OhpT9F25Vc16EAAH-qPDXD-ZpMlomIx3qRHg890k",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Dr. Siti Aminah\",\r\n    \"email\": \"siti.dokter@hospital.com\",\r\n    \"password\": \"dokter123\",\r\n    \"spesialis\": \"Anak\",\r\n    \"no_hp\": \"081345678901\",\r\n    \"poli_id\": 3\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/MiniHospital/hospital-api/index.php/api/doctors",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "MiniHospital",
+                "hospital-api",
+                "index.php",
+                "api",
+                "doctors"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ListDokter",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/MiniHospital/hospital-api/index.php/api/doctors",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "MiniHospital",
+                "hospital-api",
+                "index.php",
+                "api",
+                "doctors"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DetailDokter",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/MiniHospital/hospital-api/index.php/api/doctors/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "MiniHospital",
+                "hospital-api",
+                "index.php",
+                "api",
+                "doctors",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdateDokter",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJuYW1lIjoiQWRtaW4gS2xpbmlrIiwiZW1haWwiOiJhZG1pbjJAaG9zcGl0YWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc4NTY4ODU2LCJleHAiOjE3Nzg2NTUyNTZ9.8T3OhpT9F25Vc16EAAH-qPDXD-ZpMlomIx3qRHg890k",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"spesialis\": \"Penyakit Dalam & Endokrin\",\r\n    \"no_hp\": \"081299999999\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/MiniHospital/hospital-api/index.php/api/doctors/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "MiniHospital",
+                "hospital-api",
+                "index.php",
+                "api",
+                "doctors",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"budi.dokter@hospital.com\",\r\n    \"password\": \"dokter123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/MiniHospital/hospital-api/index.php/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "MiniHospital",
+                "hospital-api",
+                "index.php",
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Regist",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Budi Santoso\",\r\n    \"email\": \"budo@test.com\",\r\n    \"password\": \"budo123\",\r\n    \"alamat\": \"Jl. Mawar No. 5, Jember\",\r\n    \"tanggal_lahir\": \"1995-08-17\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/MiniHospital/hospital-api/index.php/api/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "MiniHospital",
+                "hospital-api",
+                "index.php",
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"email\": \"budi@test.com\",\r\n    \"password\": \"budi123\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/MiniHospital/hospital-api/index.php/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "MiniHospital",
+                "hospital-api",
+                "index.php",
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Poli",
+      "item": [
+        {
+          "name": "AddPoli",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJuYW1lIjoiQWRtaW4gS2xpbmlrIiwiZW1haWwiOiJhZG1pbjJAaG9zcGl0YWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc4NTY4ODU2LCJleHAiOjE3Nzg2NTUyNTZ9.8T3OhpT9F25Vc16EAAH-qPDXD-ZpMlomIx3qRHg890k",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nama_poli\": \"Poli Wajah\",\r\n    \"lokasi\": \"Lantai 3 Gedung B\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/MiniHospital/hospital-api/index.php/api/poli",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "MiniHospital",
+                "hospital-api",
+                "index.php",
+                "api",
+                "poli"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ListPoli",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/MiniHospital/hospital-api/index.php/api/poli",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "MiniHospital",
+                "hospital-api",
+                "index.php",
+                "api",
+                "poli"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdatePoli",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJuYW1lIjoiQWRtaW4gS2xpbmlrIiwiZW1haWwiOiJhZG1pbjJAaG9zcGl0YWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc4NTY4ODU2LCJleHAiOjE3Nzg2NTUyNTZ9.8T3OhpT9F25Vc16EAAH-qPDXD-ZpMlomIx3qRHg890k",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"lokasi\": \"Lantai 2 Gedung B (Pindah)\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/MiniHospital/hospital-api/index.php/api/poli/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "MiniHospital",
+                "hospital-api",
+                "index.php",
+                "api",
+                "poli",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeletePoli",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJuYW1lIjoiQWRtaW4gS2xpbmlrIiwiZW1haWwiOiJhZG1pbjJAaG9zcGl0YWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc4NTY4ODU2LCJleHAiOjE3Nzg2NTUyNTZ9.8T3OhpT9F25Vc16EAAH-qPDXD-ZpMlomIx3qRHg890k",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/MiniHospital/hospital-api/index.php/api/poli/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "MiniHospital",
+                "hospital-api",
+                "index.php",
+                "api",
+                "poli",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Schedul",
+      "item": [
+        {
+          "name": "AddSchedul",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJuYW1lIjoiQWRtaW4gS2xpbmlrIiwiZW1haWwiOiJhZG1pbjJAaG9zcGl0YWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc4NTY4ODU2LCJleHAiOjE3Nzg2NTUyNTZ9.8T3OhpT9F25Vc16EAAH-qPDXD-ZpMlomIx3qRHg890k",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"dokter_id\": 1, \"hari\": \"senin\", \"jam_mulai\": \"08:00\", \"jam_selesai\": \"10:00\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/MiniHospital/hospital-api/index.php/api/schedules",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "MiniHospital",
+                "hospital-api",
+                "index.php",
+                "api",
+                "schedules"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "SchedulList",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/MiniHospital/hospital-api/index.php/api/schedules",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "MiniHospital",
+                "hospital-api",
+                "index.php",
+                "api",
+                "schedules"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "SchedulFilter",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/MiniHospital/hospital-api/index.php/api/schedules?dokter_id=1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "MiniHospital",
+                "hospital-api",
+                "index.php",
+                "api",
+                "schedules"
+              ],
+              "query": [
+                {
+                  "key": "dokter_id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Booking",
+      "item": [
+        {
+          "name": "Booking",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJuYW1lIjoiQnVkaSBTYW50b3NvIiwiZW1haWwiOiJidWRpQHRlc3QuY29tIiwicm9sZSI6InBhc2llbiIsInBhc2llbl9pZCI6MSwiaWF0IjoxNzc4NjgxNzY3LCJleHAiOjE3Nzg3NjgxNjd9.uGrTjWS_EJrRcUf5yyQHusfZUkwBwjZ7zEFotH5PqVk",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"dokter_id\": 1,\r\n    \"tanggal\": \"2026-05-13\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/MiniHospital/hospital-api/index.php/api/queue/book",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "MiniHospital",
+                "hospital-api",
+                "index.php",
+                "api",
+                "queue",
+                "book"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ListBookingDokter",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJuYW1lIjoiRHIuIEJ1ZGkgU2V0aWF3YW4iLCJlbWFpbCI6ImJ1ZGkuZG9rdGVyQGhvc3BpdGFsLmNvbSIsInJvbGUiOiJkb2t0ZXIiLCJkb2t0ZXJfaWQiOjEsImlhdCI6MTc3ODU3NDQ4MCwiZXhwIjoxNzc4NjYwODgwfQ.9TrUzbZfcxS7wMc5V3oCqplR3t4jfv6eDNspDOmYYW8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/MiniHospital/hospital-api/index.php/api/queue/today",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "MiniHospital",
+                "hospital-api",
+                "index.php",
+                "api",
+                "queue",
+                "today"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ListBookingAdmin",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJuYW1lIjoiQWRtaW4gS2xpbmlrIiwiZW1haWwiOiJhZG1pbjJAaG9zcGl0YWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc4NTY4ODU2LCJleHAiOjE3Nzg2NTUyNTZ9.8T3OhpT9F25Vc16EAAH-qPDXD-ZpMlomIx3qRHg890k",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/MiniHospital/hospital-api/index.php/api/queue/today",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "MiniHospital",
+                "hospital-api",
+                "index.php",
+                "api",
+                "queue",
+                "today"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ListBookingPasien",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1LCJuYW1lIjoiQnVkaSBTYW50b3NvIiwiZW1haWwiOiJidWRvQHRlc3QuY29tIiwicm9sZSI6InBhc2llbiIsInBhc2llbl9pZCI6MywiaWF0IjoxNzc4NTc0NjU5LCJleHAiOjE3Nzg2NjEwNTl9.f1I44uaB1HWYikpgxOrZoDAboRCTzWEnFW2Mcs0iLBE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/MiniHospital/hospital-api/index.php/api/queue/today",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "MiniHospital",
+                "hospital-api",
+                "index.php",
+                "api",
+                "queue",
+                "today"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DokterStatusUpdate",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJuYW1lIjoiRHIuIEJ1ZGkgU2V0aWF3YW4iLCJlbWFpbCI6ImJ1ZGkuZG9rdGVyQGhvc3BpdGFsLmNvbSIsInJvbGUiOiJkb2t0ZXIiLCJkb2t0ZXJfaWQiOjEsImlhdCI6MTc3ODU3NDQ4MCwiZXhwIjoxNzc4NjYwODgwfQ.9TrUzbZfcxS7wMc5V3oCqplR3t4jfv6eDNspDOmYYW8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"status\": \"selesai\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/MiniHospital/hospital-api/index.php/api/queue/1/status",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "MiniHospital",
+                "hospital-api",
+                "index.php",
+                "api",
+                "queue",
+                "1",
+                "status"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PasienStatusUpdate",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1LCJuYW1lIjoiQnVkaSBTYW50b3NvIiwiZW1haWwiOiJidWRvQHRlc3QuY29tIiwicm9sZSI6InBhc2llbiIsInBhc2llbl9pZCI6MywiaWF0IjoxNzc4NTc0NjU5LCJleHAiOjE3Nzg2NjEwNTl9.f1I44uaB1HWYikpgxOrZoDAboRCTzWEnFW2Mcs0iLBE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"status\": \"batal\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/MiniHospital/hospital-api/index.php/api/queue/3/status",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "MiniHospital",
+                "hospital-api",
+                "index.php",
+                "api",
+                "queue",
+                "3",
+                "status"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "MedicalRecord",
+      "item": [
+        {
+          "name": "DokterAdd",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJuYW1lIjoiRHIuIEJ1ZGkgU2V0aWF3YW4iLCJlbWFpbCI6ImJ1ZGkuZG9rdGVyQGhvc3BpdGFsLmNvbSIsInJvbGUiOiJkb2t0ZXIiLCJkb2t0ZXJfaWQiOjEsImlhdCI6MTc3ODU3NDQ4MCwiZXhwIjoxNzc4NjYwODgwfQ.9TrUzbZfcxS7wMc5V3oCqplR3t4jfv6eDNspDOmYYW8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"pasien_id\": 999,\r\n    \"diagnosa\": \"Hipertensi ringan\",\r\n    \"tindakan\": \"Pemeriksaan tekanan darah dan EKG\",\r\n    \"resep\": \"Amlodipine 5mg 1x sehari\",\r\n    \"catatan\": \"Pasien diminta kontrol kembali 2 minggu lagi\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/MiniHospital/hospital-api/index.php/api/medical-records",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "MiniHospital",
+                "hospital-api",
+                "index.php",
+                "api",
+                "medical-records"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PasienView",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJuYW1lIjoiQnVkaSBTYW50b3NvIiwiZW1haWwiOiJidWRpQHRlc3QuY29tIiwicm9sZSI6InBhc2llbiIsInBhc2llbl9pZCI6MSwiaWF0IjoxNzc4NTc1NzU5LCJleHAiOjE3Nzg2NjIxNTl9.df-ZUPjYca18UIPpF_IvZ0jdGOYlfMjojj-Z5-a7hVE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/MiniHospital/hospital-api/index.php/api/medical-records/patient/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "MiniHospital",
+                "hospital-api",
+                "index.php",
+                "api",
+                "medical-records",
+                "patient",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AdminView",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJuYW1lIjoiQWRtaW4gS2xpbmlrIiwiZW1haWwiOiJhZG1pbjJAaG9zcGl0YWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc4NTY4ODU2LCJleHAiOjE3Nzg2NTUyNTZ9.8T3OhpT9F25Vc16EAAH-qPDXD-ZpMlomIx3qRHg890k",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/MiniHospital/hospital-api/index.php/api/medical-records/patient/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "MiniHospital",
+                "hospital-api",
+                "index.php",
+                "api",
+                "medical-records",
+                "patient",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
