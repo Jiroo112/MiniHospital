@@ -2,26 +2,135 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking Antrian - Pasien</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: #f0f4f8; }
+
+        .page-header {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            border-radius: 16px; padding: 22px 28px; color: #fff;
+            position: relative; overflow: hidden; margin-bottom: 24px;
+        }
+        .page-header::before {
+            content: '📋'; position: absolute; right: 24px; top: 50%;
+            transform: translateY(-50%); font-size: 4rem; opacity: 0.12;
+        }
+        .page-header h4 { font-weight: 700; font-size: 1.2rem; margin: 0 0 4px; }
+        .page-header p  { opacity: 0.8; margin: 0; font-size: 0.85rem; }
+
+        .booking-card {
+            background: #fff; border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06); overflow: hidden;
+        }
+        .booking-card-header {
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            padding: 16px 22px; color: #fff;
+        }
+        .booking-card-header h6 { font-weight: 700; margin: 0; font-size: 0.95rem; }
+
+        .booking-body { padding: 24px; }
+
+        .form-label {
+            font-size: 0.82rem; font-weight: 600; color: #374151; margin-bottom: 6px;
+        }
+        .form-control, .form-select {
+            border: 1.5px solid #e2e8f0; border-radius: 10px;
+            font-family: inherit; font-size: 0.875rem;
+            padding: 9px 13px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 3px rgba(14,165,233,0.15);
+            outline: none;
+        }
+        .form-control:disabled, .form-select:disabled {
+            background: #f8fafc; color: #94a3b8;
+        }
+
+        .jadwal-info {
+            background: #f0f9ff; border: 1px solid #bae6fd;
+            border-radius: 10px; padding: 12px 16px; margin-top: 8px;
+        }
+        .jadwal-info p  { font-size: 0.82rem; font-weight: 700; color: #0369a1; margin: 0 0 6px; }
+        .jadwal-info li { font-size: 0.82rem; color: #0369a1; }
+
+        .btn-booking {
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            color: #fff; border: none; border-radius: 10px;
+            padding: 11px; font-size: 0.95rem; font-weight: 600;
+            width: 100%; cursor: pointer;
+            transition: opacity 0.2s, transform 0.15s;
+            box-shadow: 0 4px 14px rgba(14,165,233,0.35);
+        }
+        .btn-booking:hover   { opacity: 0.9; transform: translateY(-1px); }
+        .btn-booking:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+        .catatan-box {
+            background: #fefce8; border: 1px solid #fde047;
+            border-radius: 10px; padding: 12px 16px;
+            font-size: 0.82rem; color: #713f12; margin-top: 16px;
+        }
+
+        /* Hasil booking */
+        .hasil-booking {
+            background: #f0fdf4; border: 1px solid #86efac;
+            border-radius: 16px; padding: 28px; text-align: center;
+        }
+        .hasil-booking .check { font-size: 3rem; margin-bottom: 12px; }
+        .hasil-booking h5 { font-weight: 700; color: #166534; margin-bottom: 8px; }
+        .nomor-antrian-besar {
+            font-size: 4rem; font-weight: 700; color: #0ea5e9;
+            line-height: 1; margin: 12px 0 4px;
+        }
+        .hasil-info {
+            background: #fff; border-radius: 10px; padding: 14px;
+            margin: 16px 0; text-align: left;
+        }
+        .hasil-info-row {
+            display: flex; justify-content: space-between;
+            padding: 6px 0; border-bottom: 1px solid #f1f5f9;
+            font-size: 0.85rem;
+        }
+        .hasil-info-row:last-child { border-bottom: none; }
+        .hasil-info-row .label { color: #94a3b8; }
+        .hasil-info-row .value { font-weight: 600; color: #1e293b; }
+
+        .btn-lihat-antrian {
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            color: #fff; border: none; border-radius: 10px;
+            padding: 10px 24px; font-size: 0.9rem; font-weight: 600;
+            cursor: pointer; text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .btn-lihat-antrian:hover { opacity: 0.9; color: #fff; }
+    </style>
 </head>
-<body class="bg-light">
+<body>
 
 <div id="navbar"></div>
 
-<div class="container">
-    <h3 class="mb-3">Booking Antrian Baru</h3>
+<div class="container py-4">
+
+    <div class="page-header">
+        <h4>Booking Antrian Baru</h4>
+        <p>Pilih poli dan dokter untuk kunjungan Anda</p>
+    </div>
 
     <div class="row justify-content-center">
-        <div class="col-md-7">
+        <div class="col-lg-7">
 
             <div id="hasilBooking"></div>
 
-            <div class="card shadow-sm">
-                <div class="card-header bg-info text-white">
-                    Pilih Poli dan Dokter
+            <div class="booking-card" id="formCard">
+                <div class="booking-card-header">
+                    <h6>📋 Pilih Poli dan Dokter</h6>
                 </div>
-                <div class="card-body" id="formCardBody">
+                <div class="booking-body">
                     <form id="formBooking">
 
                         <div class="mb-3">
@@ -36,29 +145,30 @@
                             <select name="dokter_id" class="form-select" required disabled>
                                 <option value="">-- Pilih poli dulu --</option>
                             </select>
+                            <div id="jadwalInfo"></div>
                         </div>
 
-                        <div id="jadwalInfo" class="mb-3"></div>
-
-                        <div class="mb-3">
+                        <div class="mb-4">
                             <label class="form-label">Tanggal Kunjungan</label>
                             <input type="date" name="tanggal" class="form-control" required>
-                            <small class="text-muted">Tidak bisa pilih tanggal masa lalu</small>
+                            <div style="font-size:0.78rem;color:#94a3b8;margin-top:4px">
+                                Tidak bisa pilih tanggal masa lalu
+                            </div>
                         </div>
 
-                        <button type="submit" class="btn btn-info text-white w-100" id="btnBooking">
+                        <button type="submit" class="btn-booking" id="btnBooking">
                             Booking Sekarang
                         </button>
+
                     </form>
+
+                    <div class="catatan-box">
+                        ⚠️ <strong>Catatan:</strong> Anda hanya bisa punya 1 antrian aktif per hari.
+                        Selesaikan atau batalkan booking lama dulu sebelum booking baru di tanggal yang sama.
+                    </div>
                 </div>
             </div>
 
-            <div class="alert alert-light mt-3">
-                <small>
-                    <strong>Catatan:</strong> Anda hanya bisa punya 1 antrian aktif per hari.
-                    Selesaikan atau batalkan booking lama dulu sebelum booking baru di tanggal yang sama.
-                </small>
-            </div>
         </div>
     </div>
 </div>

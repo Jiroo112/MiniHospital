@@ -2,36 +2,155 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard Pasien</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Pasien</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: #f0f4f8; }
+
+        .welcome-banner {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            border-radius: 16px; padding: 24px 28px; color: #fff;
+            position: relative; overflow: hidden; margin-bottom: 24px;
+        }
+        .welcome-banner::before {
+            content: '👤'; position: absolute; right: 24px; top: 50%;
+            transform: translateY(-50%); font-size: 5rem; opacity: 0.1;
+        }
+        .welcome-banner h4 { font-weight: 700; font-size: 1.3rem; margin: 0 0 4px; }
+        .welcome-banner p  { opacity: 0.8; margin: 0; font-size: 0.88rem; }
+
+        .section-card {
+            background: #fff; border-radius: 14px;
+            border: none; box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+        .section-header {
+            padding: 16px 22px 13px; border-bottom: 1px solid #f1f5f9;
+        }
+        .section-title { font-size: 0.92rem; font-weight: 700; color: #1e293b; margin: 0; }
+
+        /* Antrian aktif card */
+        .antrian-aktif {
+            border-radius: 14px; overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+        .antrian-aktif-header {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            padding: 14px 20px; color: #fff;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .antrian-aktif-header h6 { font-weight: 700; margin: 0; font-size: 0.9rem; }
+        .antrian-aktif-body { background: #fff; padding: 20px; }
+        .nomor-besar {
+            font-size: 3.5rem; font-weight: 700; color: #0ea5e9;
+            line-height: 1; text-align: center;
+        }
+        .nomor-label { font-size: 0.75rem; color: #94a3b8; text-align: center; margin-top: 2px; }
+
+        .info-row { display: flex; align-items: center; margin-bottom: 8px; }
+        .info-label { font-size: 0.78rem; color: #94a3b8; width: 80px; flex-shrink: 0; }
+        .info-value { font-size: 0.88rem; color: #1e293b; font-weight: 600; }
+
+        /* Menu cepat */
+        .quick-menu { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+        .quick-btn {
+            display: flex; align-items: center; gap: 12px;
+            padding: 12px 16px; border-radius: 10px;
+            text-decoration: none; font-weight: 600; font-size: 0.88rem;
+            transition: transform 0.15s, box-shadow 0.15s;
+            border: none; cursor: pointer;
+        }
+        .quick-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
+        .quick-btn .btn-icon {
+            width: 36px; height: 36px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; flex-shrink: 0;
+        }
+        .quick-btn-booking { background: #eff6ff; color: #1d4ed8; }
+        .quick-btn-booking .btn-icon { background: #dbeafe; }
+        .quick-btn-antrian  { background: #fff7ed; color: #c2410c; }
+        .quick-btn-antrian .btn-icon  { background: #fed7aa; }
+        .quick-btn-riwayat  { background: #f0fdf4; color: #166534; }
+        .quick-btn-riwayat .btn-icon  { background: #bbf7d0; }
+
+        .empty-antrian {
+            background: #fff; border-radius: 14px; padding: 32px 20px;
+            text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+        .empty-antrian .ei { font-size: 2.5rem; margin-bottom: 8px; }
+        .empty-antrian h6  { font-weight: 700; color: #1e293b; margin-bottom: 6px; }
+        .empty-antrian p   { color: #94a3b8; font-size: 0.85rem; margin-bottom: 16px; }
+
+        .btn-booking-baru {
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            color: #fff; border: none; border-radius: 10px;
+            padding: 10px 20px; font-size: 0.88rem; font-weight: 600;
+            cursor: pointer; text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .btn-booking-baru:hover { opacity: 0.9; color: #fff; }
+    </style>
 </head>
-<body class="bg-light">
+<body>
 
 <div id="navbar"></div>
 
-<div class="container">
-    <div class="mb-4">
-        <h3>Halo, <span id="userName" class="text-info"></span></h3>
-        <p class="text-muted">Selamat datang di sistem Mini Hospital.</p>
+<div class="container py-4">
+
+    <!-- Welcome Banner -->
+    <div class="welcome-banner">
+        <h4>Halo, <span id="userName">Pasien</span>! 👋</h4>
+        <p id="tanggalHariIni"></p>
     </div>
 
-    <!-- Antrian Aktif -->
-    <div class="row mb-4">
-        <div class="col-md-8" id="cardAntrian">
-            <div class="text-center py-3">Memuat antrian...</div>
-        </div>
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h6 class="card-title">Menu Cepat</h6>
-                    <div class="d-grid gap-2">
-                        <a href="booking.html" class="btn btn-info text-white">Booking Antrian</a>
-                        <a href="antrian.html" class="btn btn-outline-secondary">Antrian Saya</a>
-                        <a href="riwayat.html" class="btn btn-outline-secondary">Riwayat Kunjungan</a>
-                    </div>
+    <div class="row g-4">
+
+        <!-- Antrian Aktif -->
+        <div class="col-lg-7">
+            <div class="section-card mb-0">
+                <div class="section-header">
+                    <h6 class="section-title">🏥 Status Antrian Hari Ini</h6>
+                </div>
+                <div class="p-3" id="cardAntrian">
+                    <div class="text-center py-4 text-muted">Memuat antrian...</div>
                 </div>
             </div>
         </div>
+
+        <!-- Menu Cepat -->
+        <div class="col-lg-5">
+            <div class="section-card">
+                <div class="section-header">
+                    <h6 class="section-title">⚡ Menu Cepat</h6>
+                </div>
+                <div class="quick-menu">
+                    <a href="booking.html" class="quick-btn quick-btn-booking">
+                        <span class="btn-icon">📋</span>
+                        <div>
+                            <div>Booking Antrian</div>
+                            <div style="font-size:0.75rem;opacity:0.7;font-weight:400">Daftar ke dokter pilihan</div>
+                        </div>
+                    </a>
+                    <a href="antrian.html" class="quick-btn quick-btn-antrian">
+                        <span class="btn-icon">⏳</span>
+                        <div>
+                            <div>Antrian Saya</div>
+                            <div style="font-size:0.75rem;opacity:0.7;font-weight:400">Cek status antrian hari ini</div>
+                        </div>
+                    </a>
+                    <a href="riwayat.html" class="quick-btn quick-btn-riwayat">
+                        <span class="btn-icon">📂</span>
+                        <div>
+                            <div>Riwayat Kunjungan</div>
+                            <div style="font-size:0.75rem;opacity:0.7;font-weight:400">Lihat rekam medis & booking</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 

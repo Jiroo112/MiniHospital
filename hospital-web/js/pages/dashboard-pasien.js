@@ -1,48 +1,94 @@
-$(function() {
-    requireRole('pasien');
-    injectNavbar('pasien', 'dashboard');
+/**
+ * dashboard-pasien.js
+ * Logika halaman Dashboard Pasien
+ */
 
-    $('#userName').text(getUser().name);
+$(function () {
+  requireRole("pasien");
+  injectNavbar("pasien", "dashboard");
 
-    loadAntrianAktif();
+  $("#userName").text(getUser().name);
+  $("#tanggalHariIni").text(
+    new Date().toLocaleDateString("id-ID", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    })
+  );
+
+  loadAntrianAktif();
 });
 
 function loadAntrianAktif() {
-    apiCall('/queue/today', 'GET').done(function(res) {
-        const aktif = (res.data || []).find(q => q.status === 'menunggu');
+  apiCall("/queue/today", "GET")
+    .done(function (res) {
+      var aktif = (res.data || []).find(function (q) {
+        return q.status === "menunggu";
+      });
 
-        if (aktif) {
-            $('#cardAntrian').html(`
-                <div class="card bg-warning shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Antrian Aktif Hari Ini</h5>
-                        <div class="row align-items-center">
-                            <div class="col-4 text-center border-end">
-                                <small class="d-block">Nomor Antrian</small>
-                                <h1 class="mb-0">${aktif.nomor_antrian}</h1>
-                            </div>
-                            <div class="col-8">
-                                <p class="mb-1"><strong>Dokter:</strong> ${aktif.nama_dokter}</p>
-                                <p class="mb-1"><strong>Poli:</strong> ${aktif.nama_poli}</p>
-                                <p class="mb-0"><strong>Tanggal:</strong> ${formatDate(aktif.tanggal)}</p>
-                            </div>
-                        </div>
-                        <div class="mt-3 text-end">
-                            <a href="antrian.html" class="btn btn-light btn-sm">Lihat Detail</a>
-                        </div>
-                    </div>
-                </div>
-            `);
-        } else {
-            $('#cardAntrian').html(`
-                <div class="card shadow-sm">
-                    <div class="card-body text-center py-4">
-                        <h5 class="text-muted">Anda belum punya antrian aktif</h5>
-                        <p class="text-muted">Klik tombol di bawah untuk booking ke dokter pilihan Anda.</p>
-                        <a href="booking.html" class="btn btn-info text-white">Booking Antrian Baru</a>
-                    </div>
-                </div>
-            `);
-        }
+      if (aktif) {
+        $("#cardAntrian").html(
+          '<div class="antrian-aktif">' +
+            '<div class="antrian-aktif-header">' +
+            "<h6>🟡 Antrian Aktif Hari Ini</h6>" +
+            '<span style="font-size:0.78rem;opacity:0.85">' +
+            formatDate(aktif.tanggal) +
+            "</span>" +
+            "</div>" +
+            '<div class="antrian-aktif-body">' +
+            '<div class="d-flex align-items-center">' +
+            '<div style="min-width:100px">' +
+            '<div class="nomor-besar">' +
+            aktif.nomor_antrian +
+            "</div>" +
+            '<div class="nomor-label">No. Antrian</div>' +
+            "</div>" +
+            '<div class="divider-v"></div>' +
+            '<div class="flex-1">' +
+            '<div class="info-row">' +
+            '<div class="info-label">Dokter</div>' +
+            '<div class="info-value">' +
+            aktif.nama_dokter +
+            "</div>" +
+            "</div>" +
+            '<div class="info-row">' +
+            '<div class="info-label">Poli</div>' +
+            '<div class="info-value">' +
+            aktif.nama_poli +
+            "</div>" +
+            "</div>" +
+            '<div class="info-row" style="margin-bottom:0">' +
+            '<div class="info-label">Status</div>' +
+            '<div class="info-value">' +
+            '<span style="background:#fef3c7;color:#92400e;padding:3px 10px;border-radius:20px;font-size:0.75rem;font-weight:600">Menunggu</span>' +
+            "</div>" +
+            "</div>" +
+            "</div>" +
+            "</div>" +
+            '<div style="margin-top:16px;text-align:right">' +
+            '<a href="antrian.html" class="btn-booking-baru">Lihat Detail Antrian →</a>' +
+            "</div>" +
+            "</div>" +
+            "</div>"
+        );
+      } else {
+        $("#cardAntrian").html(
+          '<div class="empty-antrian">' +
+            '<div class="ei">🏥</div>' +
+            "<h6>Anda belum punya antrian aktif</h6>" +
+            "<p>Klik tombol di bawah untuk booking ke dokter pilihan Anda.</p>" +
+            '<a href="booking.html" class="btn-booking-baru">Booking Antrian Baru</a>' +
+            "</div>"
+        );
+      }
+    })
+    .fail(function () {
+      $("#cardAntrian").html(
+        '<div class="empty-antrian">' +
+          '<div class="ei">⚠️</div>' +
+          "<h6>Gagal memuat antrian</h6>" +
+          "</div>"
+      );
     });
 }

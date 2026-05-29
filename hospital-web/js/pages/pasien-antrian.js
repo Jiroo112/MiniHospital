@@ -1,119 +1,178 @@
-let pollingInterval = null;
+/**
+ * pasien-antrian.js
+ * Logika halaman Antrian Saya - Pasien
+ * Auto-refresh tiap 5 detik sesuai requirement
+ */
 
-$(function() {
-    requireRole('pasien');
-    injectNavbar('pasien', 'antrian');
+var pollingInterval = null;
 
-    loadAntrian();
-    startPolling();
+$(function () {
+  requireRole("pasien");
+  injectNavbar("pasien", "antrian");
 
-    $('#btnRefresh').on('click', loadAntrian);
-    $(window).on('beforeunload', stopPolling);
+  $("#tanggalHeader").text(
+    new Date().toLocaleDateString("id-ID", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    })
+  );
+
+  loadAntrian();
+  startPolling();
+
+  $("#btnRefresh").on("click", loadAntrian);
+  $(window).on("beforeunload", stopPolling);
 });
 
 function startPolling() {
-    pollingInterval = setInterval(loadAntrian, 5000);
-    $('#pollingStatus').html('<span class="badge bg-success">🟢 Auto-refresh tiap 5 detik</span>');
+  pollingInterval = setInterval(loadAntrian, 5000);
 }
 
 function stopPolling() {
-    if (pollingInterval) clearInterval(pollingInterval);
+  if (pollingInterval) clearInterval(pollingInterval);
 }
 
 function loadAntrian() {
-    apiCall('/queue/today', 'GET').done(function(res) {
-        const data = res.data || [];
+  apiCall("/queue/today", "GET")
+    .done(function (res) {
+      var data = res.data || [];
+      $("#lastUpdate").text(new Date().toLocaleTimeString("id-ID"));
 
-        if (data.length === 0) {
-            $('#mainContent').html(`
-                <div class="alert alert-info text-center">
-                    <h5>Tidak Ada Antrian Aktif Hari Ini</h5>
-                    <p>Anda belum punya booking untuk hari ini.</p>
-                    <a href="booking.html" class="btn btn-info text-white">Booking Sekarang</a>
-                </div>
-            `);
-            $('#lastUpdate').text(new Date().toLocaleTimeString('id-ID'));
-            return;
-        }
+      if (data.length === 0) {
+        $("#mainContent").html(
+          '<div class="empty-state">' +
+            '<div class="ei">🏥</div>' +
+            "<h5>Tidak Ada Antrian Aktif Hari Ini</h5>" +
+            "<p>Anda belum punya booking untuk hari ini.</p>" +
+            '<a href="booking.html" class="btn-booking-baru">Booking Sekarang</a>' +
+            "</div>"
+        );
+        return;
+      }
 
-        // Untuk setiap antrian pasien, render kartu detail
-        const cards = data.map(q => renderAntrianCard(q)).join('');
-        $('#mainContent').html(cards);
-        $('#lastUpdate').text(new Date().toLocaleTimeString('id-ID'));
+      var cards = data
+        .map(function (q) {
+          return renderAntrianCard(q);
+        })
+        .join("");
+      $("#mainContent").html(cards);
 
-        // Untuk antrian yang masih menunggu, load info posisi (berapa pasien sebelum saya)
-        data.filter(q => q.status === 'menunggu').forEach(q => {
-            loadPosisiAntrian(q);
+      // Load posisi untuk yang masih menunggu
+      data
+        .filter(function (q) {
+          return q.status === "menunggu";
+        })
+        .forEach(function (q) {
+          loadPosisiAntrian(q);
         });
+    })
+    .fail(function () {
+      $("#mainContent").html(
+        '<div class="empty-state" style="background:#fff;border-radius:16px;box-shadow:0 2px 10px rgba(0,0,0,0.06)">' +
+          '<div class="ei">⚠️</div>' +
+          "<div>Gagal memuat antrian</div>" +
+          "</div>"
+      );
     });
 }
 
 function renderAntrianCard(queue) {
-    const statusBadge = {
-        menunggu: '<span class="badge bg-warning text-dark fs-6">Menunggu</span>',
-        selesai:  '<span class="badge bg-success fs-6">Selesai</span>',
-        batal:    '<span class="badge bg-secondary fs-6">Batal</span>'
-    }[queue.status];
+  var actionBtn = "";
+  if (queue.status === "menunggu") {
+    actionBtn =
+      '<div style="margin-top:14px;text-align:right">' +
+      '<button class="btn-batal" onclick="batalkanAntrian(' +
+      queue.id +
+      ')">' +
+      "✕ Batalkan Booking</button>" +
+      "</div>";
+  }
 
-    const headerClass = queue.status === 'menunggu' ? 'bg-warning text-dark' :
-                        queue.status === 'selesai'  ? 'bg-success text-white' :
-                                                       'bg-secondary text-white';
+  var posisiDiv =
+    queue.status === "menunggu"
+      ? '<div class="posisi-info" id="posisi-' +
+        queue.id +
+        '">' +
+        "⏳ Menghitung posisi antrian...</div>"
+      : "";
 
-    const actionButton = queue.status === 'menunggu'
-        ? `<button class="btn btn-outline-danger btn-sm" onclick="batalkanAntrian(${queue.id})">Batalkan Booking</button>`
-        : '';
-
-    const posisiInfo = queue.status === 'menunggu'
-        ? `<div id="posisi-${queue.id}" class="mt-2 text-muted small">Menghitung posisi antrian...</div>`
-        : '';
-
-    return `
-        <div class="card shadow-sm mb-3">
-            <div class="card-header ${headerClass}">
-                <strong>Antrian #${queue.nomor_antrian}</strong> ${statusBadge}
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-3 text-center border-end">
-                        <small class="text-muted d-block">Nomor Antrian Anda</small>
-                        <h1 class="text-primary mb-0">${queue.nomor_antrian}</h1>
-                    </div>
-                    <div class="col-md-9">
-                        <table class="table table-sm table-borderless mb-0">
-                            <tr><td width="120"><small class="text-muted">Dokter</small></td><td><strong>${queue.nama_dokter}</strong></td></tr>
-                            <tr><td><small class="text-muted">Poli</small></td><td>${queue.nama_poli}</td></tr>
-                            <tr><td><small class="text-muted">Tanggal</small></td><td>${formatDate(queue.tanggal)}</td></tr>
-                        </table>
-                        ${posisiInfo}
-                    </div>
-                </div>
-                ${actionButton ? `<div class="mt-3 text-end">${actionButton}</div>` : ''}
-            </div>
-        </div>
-    `;
+  return (
+    '<div class="antrian-card">' +
+    '<div class="antrian-card-header ' +
+    queue.status +
+    '">' +
+    "<h6>Antrian #" +
+    queue.nomor_antrian +
+    "</h6>" +
+    '<span class="pill pill-' +
+    queue.status +
+    '">' +
+    ucFirst(queue.status) +
+    "</span>" +
+    "</div>" +
+    '<div class="antrian-body">' +
+    '<div class="d-flex align-items-center">' +
+    '<div style="min-width:90px;text-align:center">' +
+    '<div class="nomor-besar">' +
+    queue.nomor_antrian +
+    "</div>" +
+    '<div class="nomor-label">No. Antrian</div>' +
+    "</div>" +
+    '<div style="width:1px;background:#f1f5f9;align-self:stretch;margin:0 18px"></div>' +
+    '<div class="flex-1">' +
+    '<div class="info-row">' +
+    '<div class="info-label">Dokter</div>' +
+    '<div class="info-value">' +
+    queue.nama_dokter +
+    "</div>" +
+    "</div>" +
+    '<div class="info-row">' +
+    '<div class="info-label">Poli</div>' +
+    '<div class="info-value">' +
+    queue.nama_poli +
+    "</div>" +
+    "</div>" +
+    '<div class="info-row" style="margin-bottom:0">' +
+    '<div class="info-label">Tanggal</div>' +
+    '<div class="info-value">' +
+    formatDate(queue.tanggal) +
+    "</div>" +
+    "</div>" +
+    "</div>" +
+    "</div>" +
+    posisiDiv +
+    actionBtn +
+    "</div>" +
+    "</div>"
+  );
 }
 
 function loadPosisiAntrian(queue) {
-    // Hitung berapa pasien sebelum saya di antrian dokter yang sama, tanggal yang sama, status menunggu
-    // Kita pakai endpoint /queue/today dengan akses admin... tapi pasien tidak bisa lihat semua.
-    // Workaround: hitung berdasarkan nomor antrian saya vs nomor yang sudah selesai di dokter ini.
-    // Karena keterbatasan API, kita tampilkan estimasi sederhana.
-
-    $(`#posisi-${queue.id}`).html(
-        `<span class="badge bg-info">Nomor Anda: ${queue.nomor_antrian}</span> 
-         Antrian akan dipanggil sesuai urutan oleh petugas.`
-    );
+  $("#posisi-" + queue.id).html(
+    '<span style="font-weight:700">Nomor Anda: ' +
+      queue.nomor_antrian +
+      "</span> " +
+      "— Antrian dipanggil sesuai urutan oleh petugas."
+  );
 }
 
 function batalkanAntrian(id) {
-    if (!confirm('Yakin batalkan booking ini? Nomor antrian akan hangus.')) return;
+  if (!confirm("Yakin batalkan booking ini? Nomor antrian akan hangus."))
+    return;
 
-    apiCall(`/queue/${id}/status`, 'PUT', { status: 'batal' })
-        .done(function(res) {
-            alert(res.message);
-            loadAntrian();
-        })
-        .fail(function(xhr) {
-            alert(xhr.responseJSON?.message || 'Gagal batalkan');
-        });
+  apiCall("/queue/" + id + "/status", "PUT", { status: "batal" })
+    .done(function (res) {
+      alert(res.message);
+      loadAntrian();
+    })
+    .fail(function (xhr) {
+      alert(xhr.responseJSON ? xhr.responseJSON.message : "Gagal batalkan");
+    });
+}
+
+function ucFirst(str) {
+  if (!str) return "";
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }
