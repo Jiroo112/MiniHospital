@@ -1,5 +1,9 @@
 # Mini Hospital System
 
+Kontibusi
+Jiroo112 : Ali Maskur Alfatah
+Iskaa : Bagas Suyendra
+
 Sistem informasi mini rumah sakit dengan REST API dan JWT Authentication.
 
 Dibuat sebagai test case onboarding magang TIF POLIJE di CV. Esolusindo Ritme Teknologi.
